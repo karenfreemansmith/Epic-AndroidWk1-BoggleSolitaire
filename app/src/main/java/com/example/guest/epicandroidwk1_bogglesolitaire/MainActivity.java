@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -25,13 +26,16 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
     @Bind (R.id.randomStringView) TextView mRandomStringView;
     @Bind (R.id.addWordInput) EditText mAddWordInput;
     @Bind (R.id.addWordButton) Button mAddWordButton;
     @Bind (R.id.dunNaoButton) Button mDunNaoButton;
     @Bind (R.id.wordListView) TextView mWordListView;
+    @Bind (R.id.shuffleButton) Button mShuffleButton;
 
     ArrayList<String> mWordList = new ArrayList<String>();
+    private int mScore;
     private String mScrambled;
 
     @Override
@@ -46,34 +50,29 @@ public class MainActivity extends AppCompatActivity {
         String[] words = getResources().getStringArray(R.array.words_array);
         Random random = new Random();
         String word = words[random.nextInt(words.length)];
-        List<String> chars = Arrays.asList(word.split(""));
-        Collections.shuffle(chars);
-        mScrambled = TextUtils.join("", chars);
-        mRandomStringView.setText(mScrambled);
-
+        shuffleWord(word);
         mAddWordInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 boolean handled = false;
-                if(actionId == EditorInfo.IME_ACTION_DONE){
-                    String wordToAdd = mAddWordInput.getText().toString();
-                    mAddWordInput.setText("");
+                if(actionId == EditorInfo.IME_ACTION_UNSPECIFIED){
+                    String wordToAdd = mAddWordInput.getText().toString().trim();
+                    mAddWordInput.getText().clear();
                     String message = handleWord(wordToAdd);
                     Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
                     handled = true;
                 }
-                return handled;
+                return false;
             }
         });
 
         mAddWordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String wordToAdd = mAddWordInput.getText().toString();
-                mAddWordInput.setText("");
+                String wordToAdd = mAddWordInput.getText().toString().trim();
+                mAddWordInput.getText().clear();
                 String message = handleWord(wordToAdd);
                 Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-                mWordListView.setText(TextUtils.join(", ", mWordList));
             }
         });
 
@@ -82,7 +81,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ScoreActivity.class);
                 intent.putExtra("wordList", mWordList);
+                intent.putExtra("score", mScore);
                 startActivity(intent);
+            }
+        });
+
+        mShuffleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shuffleWord(mScrambled);
             }
         });
     }
@@ -97,15 +104,27 @@ public class MainActivity extends AppCompatActivity {
             String tempScrambled = mScrambled;
             for(int i = 0; i < word.length(); i++){
                 String currentChar = Character.toString(word.charAt(i));
+                Log.i(TAG, "handleWord: " + tempScrambled);
                 if(!tempScrambled.contains(currentChar)){
                     return "One of your letters is not in the word, cheater";
                 } else {
                     tempScrambled = tempScrambled.substring(0, tempScrambled.indexOf(currentChar)) + tempScrambled.substring(tempScrambled.indexOf(currentChar)+1);
                 }
             }
+            int wordScore = (int) Math.pow(2, word.length());
+            mScore += wordScore;
+            word += " (" + wordScore + ")";
             mWordList.add(word);
+            mWordListView.setText(TextUtils.join(", ", mWordList));
             return "word added to list!";
         }
+    }
+
+    public void shuffleWord(String word){
+        List<String> chars = Arrays.asList(word.split(""));
+        Collections.shuffle(chars);
+        mScrambled = TextUtils.join("", chars);
+        mRandomStringView.setText(mScrambled);
     }
 
 
