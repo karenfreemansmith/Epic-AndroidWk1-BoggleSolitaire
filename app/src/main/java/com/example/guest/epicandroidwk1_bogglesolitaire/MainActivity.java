@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     @Bind (R.id.shuffleButton) Button mShuffleButton;
 
     ArrayList<String> mWordList = new ArrayList<String>();
+    ArrayList<String> mDisplayWordList = new ArrayList<String>();
     private int mScore;
     private String mScrambled;
 
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ScoreActivity.class);
-                intent.putExtra("wordList", mWordList);
+                intent.putExtra("wordList", mDisplayWordList);
                 intent.putExtra("score", mScore);
                 startActivity(intent);
             }
@@ -119,9 +120,10 @@ public class MainActivity extends AppCompatActivity {
             }
             int wordScore = (int) Math.pow(2, word.length());
             mScore += wordScore;
-            word += " (" + wordScore + ")";
             mWordList.add(word);
-            mWordListView.setText(TextUtils.join(", ", mWordList));
+            word += " (" + wordScore + ")";
+            mDisplayWordList.add(word);
+            mWordListView.setText(TextUtils.join(", ", mDisplayWordList));
             return "word added to list!";
         }
     }
