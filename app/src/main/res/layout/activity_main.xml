@@ -21,12 +21,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/addWordInput"
-        android:layout_marginTop="59dp"
+        android:layout_marginTop="37dp"
         android:hint="Enter a word with 3 or more letters"
+        android:imeOptions="actionUnspecified"
         android:layout_below="@+id/randomStringView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:imeOptions="actionUnspecified"/>
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="match_parent"
@@ -40,37 +40,53 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="WORD ME"
-        android:id="@+id/addWordButton"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="@color/colorAccent"
-        android:layout_below="@+id/addWordInput"
-        android:layout_centerHorizontal="true" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Word List"
         android:id="@+id/wordListView"
-        android:layout_below="@+id/addWordButton"
+        android:layout_below="@+id/buttonLine"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:textSize="20dp" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Shuffle"
-        android:id="@+id/shuffleButton"
-        android:layout_below="@+id/randomStringView"
-        android:layout_centerHorizontal="true"
-        android:background="@color/colorAccent"
-        android:paddingRight="5dp"
-        android:paddingLeft="5dp"
-        android:textColor="@color/colorPrimaryDark" />
+        android:layout_below="@+id/addWordInput"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:id="@+id/buttonLine">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Give me a Hint!"
+            android:id="@+id/shuffleButton"
+            android:background="@color/colorAccent"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+  />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ADD MY WORD"
+            android:id="@+id/addWordButton"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/colorAccent"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
+    </LinearLayout>
 
 </RelativeLayout>

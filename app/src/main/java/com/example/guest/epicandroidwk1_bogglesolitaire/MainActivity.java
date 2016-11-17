@@ -43,20 +43,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-//        String randomString = RandomStringUtils.random(6, 'A', 'Z', true, false);
-//        String vowels = "AEIOU";
-//        String vowelString = RandomStringUtils.random(2, vowels.toCharArray());
-        String[] words = getResources().getStringArray(R.array.words_array);
-        Random random = new Random();
-        String word = words[random.nextInt(words.length)];
+        Intent intent = getIntent();
+        int difficulty = intent.getIntExtra("difficulty", 0);
+        String word;
+        if(difficulty == 1) {
+            String randomString = RandomStringUtils.random(6, 'a', 'z', true, false);
+            String vowels = "aeiou";
+            String vowelString = RandomStringUtils.random(2, vowels.toCharArray());
+            word = randomString + vowelString;
+        } else {
+            String[] words = getResources().getStringArray(R.array.words_array);
+            Random random = new Random();
+            word = words[random.nextInt(words.length)];
+        }
         shuffleWord(word);
         mAddWordInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 boolean handled = false;
                 if(actionId == EditorInfo.IME_ACTION_UNSPECIFIED){
-                    String wordToAdd = mAddWordInput.getText().toString().trim();
+                    String wordToAdd = mAddWordInput.getText().toString().trim().toLowerCase();
                     mAddWordInput.getText().clear();
                     String message = handleWord(wordToAdd);
                     Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
@@ -69,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         mAddWordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String wordToAdd = mAddWordInput.getText().toString().trim();
+                String wordToAdd = mAddWordInput.getText().toString().trim().toLowerCase();
                 mAddWordInput.getText().clear();
                 String message = handleWord(wordToAdd);
                 Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
