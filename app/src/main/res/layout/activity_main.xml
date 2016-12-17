@@ -69,7 +69,7 @@
             android:background="@color/colorAccent"
             android:paddingRight="5dp"
             android:paddingLeft="5dp"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/primary_material_light"
             android:layout_weight="1"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"

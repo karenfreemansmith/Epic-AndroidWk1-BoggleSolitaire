@@ -1,23 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.guest.epicandroidwk1_bogglesolitaire.StartActivity">
 
+
+
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
         android:id="@+id/easyButton"
         android:src="@drawable/easy"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:layout_marginBottom="29dp"
+        android:layout_above="@+id/textViewHard"
+        android:layout_centerHorizontal="true" />
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
         android:id="@+id/hardButton"
         android:layout_gravity="bottom"
         android:layout_weight="1"
-        android:src="@drawable/hard" />
+        android:src="@drawable/hard"
+        android:layout_marginBottom="18dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/easyButton"
+        android:layout_alignStart="@+id/easyButton" />
 
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Easy Mode"
+        android:id="@+id/textViewEasy"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:layout_above="@+id/easyButton"
+        android:layout_alignLeft="@+id/easyButton"
+        android:layout_alignStart="@+id/easyButton" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Hard Mode"
+        android:id="@+id/textViewHard"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:layout_above="@+id/hardButton"
+        android:layout_alignLeft="@+id/hardButton"
+        android:layout_alignStart="@+id/hardButton" />
+
+</RelativeLayout>
